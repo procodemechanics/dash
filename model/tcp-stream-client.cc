@@ -247,15 +247,17 @@ TcpStreamClient::Initialise (std::string algorithm, uint16_t clientId)
   m_highestRepIndex = m_videoData.averageBitrate.size () - 1;
   if (algorithm == "tobasco")
     {
+      printf("tobasco \n");
       algo = new TobascoAlgorithm (m_videoData, m_playbackData, m_bufferData, m_throughput);
     }
   else if (algorithm == "panda")
     {
-      printf("8\n");
+      printf("panda \n");
       algo = new PandaAlgorithm (m_videoData, m_playbackData, m_bufferData, m_throughput);
     }
   else if (algorithm == "festive")
     {
+      printf("festive \n");
       algo = new FestiveAlgorithm (m_videoData, m_playbackData, m_bufferData, m_throughput);
     }
   else
@@ -561,7 +563,11 @@ TcpStreamClient::LogDownload ()
               << std::setfill (' ') << std::setw (14) << m_transmissionStartReceivingSegment / (double)1000000 << " "
               << std::setfill (' ') << std::setw (12) << m_transmissionEndReceivingSegment / (double)1000000 << " "
               << std::setfill (' ') << std::setw (12) << m_videoData.segmentSize.at (m_currentRepIndex).at (m_segmentCounter) << " "
+              << std::setfill (' ') << std::setw (12) << m_videoData.averageBitrate.at(m_currentRepIndex) << " "
               << std::setfill (' ') << std::setw (12) << "Y\n";
+  // TODO: add instability metric
+
+
   downloadLog.flush ();
 }
 
@@ -605,7 +611,7 @@ TcpStreamClient::InitializeLogFiles (std::string simulationId, std::string clien
 
   std::string dLog = dashLogDirectory + m_algoName + "/" +  numberOfClients  + "/sim" + simulationId + "_" + "cl" + clientId + "_"  + "downloadLog.txt";
   downloadLog.open (dLog.c_str ());
-  downloadLog << "Segment_Index Download_Request_Sent Download_Start Download_End Segment_Size Download_OK\n";
+  downloadLog << "Segment_Index Download_Request_Sent Download_Start Download_End Segment_Size averageBitrate Download_OK\n";
   downloadLog.flush ();
 
   std::string pLog = dashLogDirectory + m_algoName + "/" +  numberOfClients  + "/sim" + simulationId + "_" + "cl" + clientId + "_"  + "playbackLog.txt";
