@@ -17,6 +17,8 @@
  */
 
 #include "festive.h"
+#include <inttypes.h>
+
 
 namespace ns3 {
 
@@ -182,8 +184,15 @@ FestiveAlgorithm::GetNextRep (const int64_t segmentCounter, int64_t clientId)
   double scoreStabilityCurrent = pow (2.0, (double)numberOfSwitches);
   double scoreStabilityRef = pow (2.0, ((double)numberOfSwitches)) + 1.0;
 
-  if ((scoreStabilityCurrent + m_alpha * scoreEfficiencyCurrent) < scoreStabilityRef + m_alpha * scoreEfficiencyRef)
-    {
+  // INSTABILITY METRIC
+  // if stability is low, check previous bit rate is same as current (if capacity is sufficient)
+  printf ("numberOfSwitches %" PRIu64 "\n" , numberOfSwitches);
+  printf ("scoreStabilityCurrent %f  \n", scoreStabilityCurrent);
+  printf ("scoreStabilityRef %f \n", scoreStabilityRef);
+  printf ("scoreEfficiencyRef %f \n", scoreEfficiencyRef);
+  printf ("averageBitrate %f at currentRepIndex %" PRIu64 "\n" , m_videoData.averageBitrate.at(currentRepIndex), currentRepIndex);
+
+  if ((scoreStabilityCurrent + m_alpha * scoreEfficiencyCurrent) < scoreStabilityRef + m_alpha * scoreEfficiencyRef) {
       answer.nextRepIndex = currentRepIndex;
       answer.decisionCase = 4;
       return answer;
