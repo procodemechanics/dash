@@ -93,3 +93,12 @@ else
 Lastly, the header file of the newly implemented adaptation algorithm needs to be included in the TcpStreamClient header file.
 
 The resulting logfiles will be written to mylogs/algorithmName/numberOfClients/
+## Result Plots
+### Average bitrate over Time
+![](results/Average%20Bitrate%20over%20Time%20%20[Tobasco].png)
+![](results/Average%20Bitrate%20over%20Time%20[Panda].png)
+![](results/Average%20Bitrate%20over%20Time%20[Festive].png)
+### Segment size over Time
+![](results/Segment%20Size%20over%20Time%20[Tobasco].png)
+![](results/Segment%20Size%20over%20Time%20[Panda].png)
+![](results/Segment%20Size%20over%20Time%20[Festive].png)
